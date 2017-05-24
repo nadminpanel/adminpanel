@@ -1,0 +1,26 @@
+{
+  "name": "nadminpanel/adminpanel",
+  "description": "Admin Panel For N Admin Panel",
+  "keywords": ["adminpanel","laravel","admin","user","role","permission"],
+  "homepage": "https://github.com/nadminpanel/adminpanel",
+  "authors": [
+    {
+      "name": "Pyae Hein",
+      "email": "nnieheayp@yahoo.com"
+    }
+  ],
+  "require": {
+    "spatie/laravel-permission": "^1.8",
+    "yajra/laravel-datatables-oracle": "^7.0",
+    "pyaesone17/active-state": "0.0.2",
+    "tintnaingwin/email-checker": "^0.3.0",
+    "intervention/image": "^2.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "NAdminPanel\\AdminPanel\\": "src/"
+    }
+  },
+  "license": "MIT"
+
+}
