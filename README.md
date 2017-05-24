@@ -23,11 +23,24 @@ $ composer require nadminpanel/adminpanel
 NAdminPanel\AdminPanel\AdminPanelServiceProvider::class,
 ```
 
-3) Then run a few commands in the terminal:
+3) Change auth user's model in config/auth.php:
+```
+'model' => NAdminPanel\AdminPanel\Models\User::class,
+```
+
+4) Then run a few commands in the terminal:
 ``` bash
-$ php artisan vendor:publish --provider="NAdminPanel\AdminPanel\AdminPanelServiceProvider"
-$ php artisan migrate #generates users table (using Laravel's default migrations)
-$ php artisan db:seed #seed admin account
+$ php artisan vendor:publish
+$ php artisan migrate
+```
+
+5) Add developer seed for admin account in database/seeds/DatabaseSeeder.php: (Optional)
+```
+$this->call(DeveloperSeeder::class);
+```
+Run seed command
+```
+$ php artisan db:seed
 ```
 
 
