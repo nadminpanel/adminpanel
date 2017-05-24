@@ -33,18 +33,18 @@ $ php artisan db:seed #seed admin account
 
 ## Credits
 
-- [Cristian Tabacitu][link-author]
+- [Pyae Hein][link-author]
 - [All Contributors][link-contributors]
 
 ## License
 
 Admin Panel is free for non-commercial use.
 
-[ico-version]: https://img.shields.io/packagist/v/backpack/base.svg?style=flat-square
+[ico-version]: https://img.shields.io/packagist/v/nadminpanel/adminpanel.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/backpack/base.svg?style=flat-square
+[ico-downloads]: https://img.shields.io/packagist/dt/nadminpanel/adminpanel.svg?style=flat-square
 
-[link-packagist]: https://packagist.org/packages/backpack/base
-[link-downloads]: https://packagist.org/packages/backpack/base
-[link-author]: http://tabacitu.ro
+[link-packagist]: https://packagist.org/packages/nadminpanel/adminpanel
+[link-downloads]: https://packagist.org/packages/nadminpanel/adminpanel
+[link-author]: https://github.com/pyaehein
 [link-contributors]: ../../contributors
