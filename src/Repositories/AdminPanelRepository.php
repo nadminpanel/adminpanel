@@ -4,7 +4,7 @@ namespace NAdminPanel\AdminPanel\Repositories;
 
 use Illuminate\Support\Facades\Auth;
 
-class CommonRepository
+class AdminPanelRepository
 {
     public function isHasPermissionAccess($permission, $request = null)
     {

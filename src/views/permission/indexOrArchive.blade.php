@@ -1,10 +1,10 @@
-@extends('nadminpanel::backend.admin.common.main')
+@extends('nadminpanel::admin.common.main')
 
 @section('title')
-    @if( active_check(config('nadminpanel.admin_backend_prefix').'/admin') == 'active' || active_check(config('nadminpanel.admin_backend_prefix').'/user') == 'active' )
-        {{ (active_check(config('nadminpanel.admin_backend_prefix').'/admin', true) == 'active') ? 'Admin' : 'User' }} Index
-    @elseif( active_check(config('nadminpanel.admin_backend_prefix').'/admin/archive') == 'active' || active_check(config('nadminpanel.admin_backend_prefix').'/user/archive') == 'active' )
-        {{ (active_check(config('nadminpanel.admin_backend_prefix').'/admin', true) == 'active') ? 'Admin' : 'User' }} Archive
+    @if( active_check(config('nadminpanel.admin_backend_prefix').'/permission') == 'active' )
+        Permission Index
+    @elseif( active_check(config('nadminpanel.admin_backend_prefix').'/permission/archive') == 'active' )
+        Permission Archive
     @endif
 @endsection
 
@@ -17,8 +17,8 @@
     <div class="box">
 
         <div class="box-header with-border">
-            <h3 class="box-title">{{ ucfirst($role) }}{{ (active_check(config('nadminpanel.admin_backend_prefix').'/admin') == 'active' || active_check(config('nadminpanel.admin_backend_prefix').'/user') == 'active') ? ' ' : ' Archive ' }}List</h3>
-            {!! (active_check(config('nadminpanel.admin_backend_prefix').'/user') == 'active') ? '<a style="margin-right:5px" class="btn btn-success pull-right " href="' . route('user.create') .'">Create User</a>' : '' !!}
+            <h3 class="box-title">Permission{{ (active_check(config('nadminpanel.admin_backend_prefix').'/permission') == 'active') ? ' ' : ' Archive ' }}List</h3>
+            <a style="margin-right:5px" class="btn btn-success pull-right " href="{{ route('permission.create') }}">Create Permission</a>
         </div><!-- /.box-header -->
 
         <div class="box-body">
@@ -27,7 +27,6 @@
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
-                    <th>Email</th>
                     <th>Action</th>
                 </tr>
                 </thead>
@@ -45,15 +44,14 @@
     <script type="text/javascript" src="{{ asset('backend/plugins/datatables.net-bs/js/dataTables.responsive.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('backend/plugins/datatables.net-bs/js/dataTables.bootstrap.js') }}"></script>
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(document).ready(function  (argument) {
 
-        @if(active_check(config('nadminpanel.admin_backend_prefix').'/admin') == 'active' || active_check(config('nadminpanel.admin_backend_prefix').'/user') == 'active')
-            var mainUrl = "{!! (active_check(config('nadminpanel.admin_backend_prefix').'/admin') == 'active') ? route('admin.index') : route('user.index') !!}";
-        @elseif(active_check(config('nadminpanel.admin_backend_prefix').'/admin/archive') == 'active' || active_check(config('nadminpanel.admin_backend_prefix').'/user/archive') == 'active')
-            var mainUrl = "{!! (active_check(config('nadminpanel.admin_backend_prefix').'/admin/archive') == 'active') ? route('admin.archive') : route('user.archive')!!}";
+        @if(active_check(config('nadminpanel.admin_backend_prefix').'/permission') == 'active')
+            var mainUrl="{!! route('permission.index') !!}";
+        @elseif(active_check(config('nadminpanel.admin_backend_prefix').'/permission/archive') == 'active')
+            var mainUrl = "{!! route('permission.archive') !!}";
         @endif
 
-        
             var table=$('#data_table').DataTable({
                 processing: true,
                 serverSide: true,
@@ -63,11 +61,10 @@
                 columns: [
                     { data: 'DT_Row_Index', name: 'DT_Row_Index', orderable: false, searchable: false },
                     { data: 'name', name: 'name'},
-                    { data: 'email', name: 'email'},
                     { data: 'action', name : 'action', orderable: false, searchable: false}
                 ],
                 order: [[ 1, "asc" ]]
-                });
+            });
 
             $('#state').on('change', function(e) {
                 table.draw();
@@ -83,7 +80,7 @@
                 toastr.error($msg,'Status', {timeOut: 2000});
             };
 
-            @if(active_check(config('nadminpanel.admin_backend_prefix').'/admin') == 'active' || active_check(config('nadminpanel.admin_backend_prefix').'/user') == 'active')
+            @if(active_check(config('nadminpanel.admin_backend_prefix').'/permission') == 'active')
 
                 $('#data_table').on('click','.delete',function (e) {
                 e.preventDefault();
@@ -91,15 +88,15 @@
                     url: mainUrl+"/"+$(this).data('id'),
                     type: 'DELETE',
                     success: function(result) {
-                        successHandler('Successfully Archived Admin');
+                        successHandler('Successfully Archived Permission');
                     },
                     error: function (err) {
-                        errorHandler('Error Admin. Please reload the page.');
+                        errorHandler('Error Permission. Please reload the page.');
                     }
                 });
             });
 
-            @elseif(active_check(config('nadminpanel.admin_backend_prefix').'/admin/archive') == 'active' || active_check(config('nadminpanel.admin_backend_prefix').'/user/archive') == 'active')
+            @elseif(active_check(config('nadminpanel.admin_backend_prefix').'/permission/archive') == 'active')
 
                 $('#data_table').on('click','.unarchive',function (e) {
                     e.preventDefault();
@@ -107,10 +104,10 @@
                         url: mainUrl+"/"+$(this).data('id'),
                         type: 'PATCH',
                         success: function(result) {
-                            successHandler('Successfully Unarchived Library');
+                            successHandler('Successfully Unarchived Permission');
                         },
                         error: function (err) {
-                            errorHandler('Error Library. Try to reload the page or Wait Your connection');
+                            errorHandler('Error Permission. Try to reload the page or Wait Your connection');
                         }
                     });
                 });
@@ -121,10 +118,10 @@
                     url: mainUrl+"/"+$(this).data('id'),
                     type: 'DELETE',
                     success: function(result) {
-                        successHandler('Successfully deleted Admin');
+                        successHandler('Successfully deleted Permission');
                     },
                     error: function (err) {
-                        errorHandler('Error Admin. Please reload the page.');
+                        errorHandler('Error Permission. Please reload the page.');
                     }
                 });
             });

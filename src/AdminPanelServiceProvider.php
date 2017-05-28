@@ -53,7 +53,7 @@ class AdminPanelServiceProvider extends ServiceProvider
         PermissionLabel::deleted(function ($permission_label) {
             foreach (config('nadminpanel.permission_titles') as $title) {
                 if($permission_label->isForceDeleting()) {
-                    $permission = Permission::whereName($title.' '.$permission_label->name)->first()->forceDelete();
+                    $permission = Permission::withTrashed()->whereName($title.' '.$permission_label->name)->first()->forceDelete();
                 } else {
                     $permission = Permission::whereName($title.' '.$permission_label->name)->first()->delete();
                 }

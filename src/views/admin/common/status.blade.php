@@ -12,4 +12,4 @@
 
 </script>
 
-@endIf
+@endif

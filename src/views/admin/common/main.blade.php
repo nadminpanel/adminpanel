@@ -13,7 +13,7 @@
         background-color: #1e282c!important;
     }
 </style>
-    @include('nadminpanel::backend.admin.common.head')
+    @include('nadminpanel::admin.common.head')
     @yield('extra-css')
     <!-- Theme style -->
     <link rel="stylesheet" href="/backend/adminlte/dist/css/AdminLTE.min.css">
@@ -79,7 +79,7 @@
 
     <!-- =============================================== -->
 
-    @include('nadminpanel::backend.admin.common.sidebar')
+    @include('nadminpanel::admin.common.sidebar')
 
     <!-- =============================================== -->
 
@@ -101,7 +101,7 @@
 
             <!-- Default box -->
             @yield('box')
-            @include('nadminpanel::backend.admin.common.status')
+            @include('nadminpanel::admin.common.status')
             <!-- /.box -->
 
         </section>
@@ -126,7 +126,7 @@
         'csrfToken' => csrf_token(),
     ]); @endphp
 </script>
-@include('nadminpanel::backend.admin.common.script')
+@include('nadminpanel::admin.common.script')
 @yield('extra-script')
 </body>
 </html>

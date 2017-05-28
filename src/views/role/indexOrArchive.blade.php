@@ -1,4 +1,4 @@
-@extends('nadminpanel::backend.admin.common.main')
+@extends('nadminpanel::admin.common.main')
 
 @section('title')
     @if( active_check(config('nadminpanel.admin_backend_prefix').'/role') == 'active' )
