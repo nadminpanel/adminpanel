@@ -7,21 +7,21 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use NAdminPanel\AdminPanel\Models\Role;
 use NAdminPanel\AdminPanel\Models\User;
-use NAdminPanel\AdminPanel\Repositories\CommonRepository;
+use NAdminPanel\AdminPanel\Repositories\AdminPanelRepository;
 use NAdminPanel\AdminPanel\Requests\AdminRequest;
 use Yajra\Datatables\Facades\Datatables;
 
 class UserController extends Controller
 {
-    protected $access_permission;
+    protected $accessPermission;
     protected $viewDir;
-    protected $common_repo;
+    protected $adminRepo;
 
     public function __construct()
     {
-        $this->access_permission = ' '.'user';
+        $this->accessPermission = ' '.'user';
         $this->viewDir = "nadminpanel::";
-        $this->common_repo = new CommonRepository;
+        $this->adminRepo = new AdminPanelRepository;
     }
 
     public function showAdminLoginForm()
@@ -33,12 +33,12 @@ class UserController extends Controller
                 return redirect()->to(config('nadminpanel.user_landing_link'));
             }
         }
-        return view($this->viewDir.'backend.admin.common.login');
+        return view($this->viewDir.'admin.common.login');
     }
 
     public function index(Request $request)
     {
-        $this->common_repo->isHasPermissionAccess('show'.$this->access_permission, $request);
+        $this->adminRepo->isHasPermissionAccess('show'.$this->accessPermission, $request);
 
         $role = (request()->route()->uri() == config('nadminpanel.admin_backend_prefix').'/admin') ? 'admin' : 'user';
         if($request->ajax()){
@@ -51,26 +51,26 @@ class UserController extends Controller
             }
             return Datatables::of($query)
                 ->addColumn('action', function ($user) use ($role) {
-                    return view($this->viewDir.'backend.admin.datatable.'.$role, compact('user'))->render();
+                    return view($this->viewDir.'admin.datatable.'.$role, compact('user'))->render();
                 })
                 ->addIndexColumn()
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        return view($this->viewDir.'backend.admin.index_or_archive', compact('role'));
+        return view($this->viewDir.'admin.indexOrArchive', compact('role'));
     }
 
     public function create()
     {
-        $this->common_repo->isHasPermissionAccess('create'.$this->access_permission);
+        $this->adminRepo->isHasPermissionAccess('create'.$this->accessPermission);
 
         $roles = Role::all()->chunk(4);
-        return view($this->viewDir.'backend.admin.create_or_edit', compact('roles'));
+        return view($this->viewDir.'admin.createOrEdit', compact('roles'));
     }
 
     public function store(AdminRequest $request)
     {
-        $this->common_repo->isHasPermissionAccess('create'.$this->access_permission);
+        $this->adminRepo->isHasPermissionAccess('create'.$this->accessPermission);
 
         $user = new User;
         $user->name = $request->input('name');
@@ -87,16 +87,16 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        $this->common_repo->isHasPermissionAccess('edit'.$this->access_permission);
+        $this->adminRepo->isHasPermissionAccess('edit'.$this->accessPermission);
 
         $user = User::find($id);
         $roles = Role::all()->chunk(4);
-        return view($this->viewDir.'backend.admin.create_or_edit', compact('user', 'roles'));
+        return view($this->viewDir.'admin.createOrEdit', compact('user', 'roles'));
     }
 
     public function update(AdminRequest $request, $id)
     {
-        $this->common_repo->isHasPermissionAccess('edit'.$this->access_permission);
+        $this->adminRepo->isHasPermissionAccess('edit'.$this->accessPermission);
 
         $user = User::find($id);
         $user->name = $request->input('name');
@@ -114,7 +114,7 @@ class UserController extends Controller
 
     public function destroy($id)
     {
-        $this->common_repo->isHasPermissionAccess('delete'.$this->access_permission);
+        $this->adminRepo->isHasPermissionAccess('delete'.$this->accessPermission);
 
         User::destroy($id);
         return response()->json(['status'=>'deleted']);
@@ -122,7 +122,7 @@ class UserController extends Controller
 
     public function indexArchive(Request $request)
     {
-        $this->common_repo->isHasPermissionAccess('create'.$this->access_permission, $request);
+        $this->adminRepo->isHasPermissionAccess('create'.$this->accessPermission, $request);
 
         $role = (request()->route()->uri() == config('nadminpanel.admin_backend_prefix').'/admin/archive') ? 'admin' : 'user';
         if($request->ajax()){
@@ -135,18 +135,18 @@ class UserController extends Controller
             }
             return Datatables::of($query)
                 ->addColumn('action', function ($user) use ($role) {
-                    return view($this->viewDir.'backend.admin.datatable.'.$role, compact('user'))->render();
+                    return view($this->viewDir.'admin.datatable.'.$role, compact('user'))->render();
                 })
                 ->addIndexColumn()
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        return view($this->viewDir.'backend.admin.index_or_archive', compact('role'));
+        return view($this->viewDir.'admin.indexOrArchive', compact('role'));
     }
 
     public function unarchive(Request $request, $id)
     {
-        $this->common_repo->isHasPermissionAccess('edit'.$this->access_permission);
+        $this->adminRepo->isHasPermissionAccess('edit'.$this->accessPermission);
 
         User::onlyTrashed()->findOrFail($id)->restore();
         if ($request->ajax()) {
@@ -156,7 +156,7 @@ class UserController extends Controller
 
     public function destroyArchive(Request $request, $id)
     {
-        $this->common_repo->isHasPermissionAccess('delete'.$this->access_permission);
+        $this->adminRepo->isHasPermissionAccess('delete'.$this->accessPermission);
 
         User::onlyTrashed()->findOrFail($id)->forceDelete();
         if ($request->ajax()) {
@@ -166,7 +166,7 @@ class UserController extends Controller
 
     public function dashboard()
     {
-        return view($this->viewDir.'backend.admin.common.dashboard');
+        return view($this->viewDir.'admin.common.dashboard');
     }
 
 }

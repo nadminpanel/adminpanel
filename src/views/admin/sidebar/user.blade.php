@@ -1,4 +1,4 @@
-@if(\Auth::user()->hasPermissionTo('show user') || \Auth::user()->hasPermissionTo('create user') || \Auth::user()->hasRole('developer'))
+@if(NAdminPanel\AdminPanel\Models\PermissionLabel::exists('user') && (\Auth::user()->hasPermissionTo('show user') || \Auth::user()->hasPermissionTo('create user') || \Auth::user()->hasRole('developer')))
 <li class="{{ active_check(config('nadminpanel.admin_backend_prefix').'/user', true) }} treeview">
     <a href="#">
         <i class="fa fa-user"></i>

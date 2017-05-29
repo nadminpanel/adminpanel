@@ -6,26 +6,26 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use NAdminPanel\AdminPanel\Models\PermissionLabel;
 use NAdminPanel\AdminPanel\Models\Role;
-use NAdminPanel\AdminPanel\Repositories\CommonRepository;
+use NAdminPanel\AdminPanel\Repositories\AdminPanelRepository;
 use NAdminPanel\AdminPanel\Requests\RoleRequest;
 use Yajra\Datatables\Facades\Datatables;
 
 class RoleController extends Controller
 {
-    protected $access_permission;
+    protected $accessPermission;
     protected $viewDir;
-    protected $common_repo;
+    protected $adminRepo;
 
     public function __construct()
     {
-        $this->access_permission = ' '.'role';
+        $this->accessPermission = ' '.'role';
         $this->viewDir = 'nadminpanel::';
-        $this->common_repo = new CommonRepository;
+        $this->adminRepo = new AdminPanelRepository;
     }
 
     public function index(Request $request)
     {
-        $this->common_repo->isHasPermissionAccess('show'.$this->access_permission, $request);
+        $this->adminRepo->isHasPermissionAccess('show'.$this->accessPermission, $request);
 
         if ($request->ajax()) {
             $query = Role::all();
@@ -44,26 +44,26 @@ class RoleController extends Controller
                     return '<a href="#" data-toggle="popover" data-content="' . $permissions_str . '"><button class="btn btn-xs btn-success">Permissions</button></a>';
                 })
                 ->addColumn('action', function ($role) {
-                    return view($this->viewDir . 'backend.admin.datatable.role', compact('role'))->render();
+                    return view($this->viewDir . 'admin.datatable.role', compact('role'))->render();
                 })
                 ->addIndexColumn()
                 ->rawColumns(['permissions', 'action'])
                 ->make(true);
         }
-        return view($this->viewDir . 'backend.role.index_or_archive');
+        return view($this->viewDir . 'role.indexOrArchive');
     }
 
     public function create()
     {
-        $this->common_repo->isHasPermissionAccess('create'.$this->access_permission);
+        $this->adminRepo->isHasPermissionAccess('create'.$this->accessPermission);
 
         $permission_labels = PermissionLabel::all()->chunk(2);
-        return view($this->viewDir.'backend.role.create_or_edit', compact('permission_labels'));
+        return view($this->viewDir.'role.createOrEdit', compact('permission_labels'));
     }
 
     public function store(RoleRequest $request)
     {
-        $this->common_repo->isHasPermissionAccess('create'.$this->access_permission);
+        $this->adminRepo->isHasPermissionAccess('create'.$this->accessPermission);
 
         $role = new Role;
         $role->name = $request->input('name');
@@ -78,24 +78,24 @@ class RoleController extends Controller
 
     public function show($id)
     {
-        $this->common_repo->isHasPermissionAccess('show'.$this->access_permission);
+        $this->adminRepo->isHasPermissionAccess('show'.$this->accessPermission);
 
         $role = Role::find($id);
-        return view($this->viewDir.'backend.role.show', compact('role'));
+        return view($this->viewDir.'role.show', compact('role'));
     }
 
     public function edit($id)
     {
-        $this->common_repo->isHasPermissionAccess('edit'.$this->access_permission);
+        $this->adminRepo->isHasPermissionAccess('edit'.$this->accessPermission);
 
         $role = Role::find($id);
         $permission_labels = PermissionLabel::all()->chunk(2);
-        return view($this->viewDir.'backend.role.create_or_edit', compact('role', 'permission_labels'));
+        return view($this->viewDir.'role.createOrEdit', compact('role', 'permission_labels'));
     }
 
     public function update(RoleRequest $request, $id)
     {
-        $this->common_repo->isHasPermissionAccess('edit'.$this->access_permission);
+        $this->adminRepo->isHasPermissionAccess('edit'.$this->accessPermission);
 
         $role = Role::find($id);
         if($role)
@@ -116,7 +116,7 @@ class RoleController extends Controller
 
     public function destroy($id)
     {
-        $this->common_repo->isHasPermissionAccess('delete'.$this->access_permission);
+        $this->adminRepo->isHasPermissionAccess('delete'.$this->accessPermission);
 
         Role::destroy($id);
         return response()->json(['status'=>'deleted']);
@@ -124,7 +124,7 @@ class RoleController extends Controller
 
     public function indexArchive(Request $request)
     {
-        $this->common_repo->isHasPermissionAccess('show'.$this->access_permission, $request);
+        $this->adminRepo->isHasPermissionAccess('show'.$this->accessPermission, $request);
 
         if($request->ajax()){
             $query = Role::onlyTrashed()->get();
@@ -143,18 +143,18 @@ class RoleController extends Controller
                     return '<a href="#" data-toggle="popover" data-content="'.$permissions_str.'"><button class="btn btn-xs btn-success">Permissions</button></a>';
                 })
                 ->addColumn('action', function ($role) {
-                    return view($this->viewDir.'backend.admin.datatable.role', compact('role'))->render();
+                    return view($this->viewDir.'admin.datatable.role', compact('role'))->render();
                 })
                 ->addIndexColumn()
                 ->rawColumns(['permissions', 'action'])
                 ->make(true);
         }
-        return view($this->viewDir.'backend.role.index_or_archive');
+        return view($this->viewDir.'role.indexOrArchive');
     }
 
     public function unarchive(Request $request, $id)
     {
-        $this->common_repo->isHasPermissionAccess('edit'.$this->access_permission);
+        $this->adminRepo->isHasPermissionAccess('edit'.$this->accessPermission);
 
         Role::onlyTrashed()->findOrFail($id)->restore();
         if ($request->ajax()) {
@@ -164,7 +164,7 @@ class RoleController extends Controller
 
     public function destroyArchive(Request $request, $id)
     {
-        $this->common_repo->isHasPermissionAccess('delete'.$this->access_permission);
+        $this->adminRepo->isHasPermissionAccess('delete'.$this->accessPermission);
 
         Role::onlyTrashed()->findOrFail($id)->forceDelete();
         if ($request->ajax()) {

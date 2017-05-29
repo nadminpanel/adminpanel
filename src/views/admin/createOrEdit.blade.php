@@ -1,4 +1,4 @@
-@extends('nadminpanel::backend.admin.common.main')
+@extends('nadminpanel::admin.common.main')
 
 @section('title')
     @if(!isset($user))

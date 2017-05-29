@@ -4,10 +4,10 @@ return [
 
     'modules' => [
 
-        'nadminpanel::backend.admin.sidebar.admin',
-        'nadminpanel::backend.admin.sidebar.user',
-        'nadminpanel::backend.admin.sidebar.role',
-        'nadminpanel::backend.admin.sidebar.permission',
+        'nadminpanel::admin.sidebar.admin',
+        'nadminpanel::admin.sidebar.user',
+        'nadminpanel::admin.sidebar.role',
+        'nadminpanel::admin.sidebar.permission',
 
     ]
 

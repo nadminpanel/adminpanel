@@ -14,4 +14,9 @@ class PermissionLabel extends Model
     protected $fillable = ['name'];
 
     protected $dates = ['deleted_at'];
+
+    public static function exists($permission_name)
+    {
+        return (PermissionLabel::whereName($permission_name)->first()) ? true : false;
+    }
 }
