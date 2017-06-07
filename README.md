@@ -25,7 +25,7 @@ NAdminPanel\AdminPanel\AdminPanelServiceProvider::class,
 
 3) Change auth user's model in config/auth.php:
 ```
-'model' => NAdminPanel\AdminPanel\Models\User::class,
+'model' => 'NAdminPanel\AdminPanel\Models\User',
 ```
 
 4) Then run a few commands in the terminal:
