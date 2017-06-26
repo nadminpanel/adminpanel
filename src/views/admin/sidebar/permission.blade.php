@@ -9,13 +9,13 @@
     </a>
     <ul class="treeview-menu">
         @if(\Auth::user()->hasPermissionTo('show permission') || \Auth::user()->hasRole('developer'))
-            <li class="{{ active_check(config('nadminpanel.admin_backend_prefix').'/permission') }}"><a href="{{ route('permission.index') }}"><i class="fa fa-circle-o"></i> Permission List</a></li>
+            <li class="{{ active_route('permission.index') }}"><a href="{{ route('permission.index') }}"><i class="fa fa-circle-o"></i> Permission List</a></li>
         @endif
         @if(\Auth::user()->hasPermissionTo('create permission') || \Auth::user()->hasRole('developer'))
-            <li class="{{ active_check(config('nadminpanel.admin_backend_prefix').'/permission/create') }}"><a href="{{ route('permission.create') }}"><i class="fa fa-circle-o"></i> Create Permission</a></li>
+            <li class="{{ active_route('permission.create') }}"><a href="{{ route('permission.create') }}"><i class="fa fa-circle-o"></i> Create Permission</a></li>
         @endif
         @if(\Auth::user()->hasPermissionTo('show permission') || \Auth::user()->hasRole('developer'))
-            <li class="{{ active_check(config('nadminpanel.admin_backend_prefix').'/permission/archive') }}"><a href="{{ route('permission.archive') }}"><i class="fa fa-circle-o"></i> Archive Permission List</a></li>
+            <li class="{{ active_route('permission.archive') }}"><a href="{{ route('permission.archive') }}"><i class="fa fa-circle-o"></i> Archive Permission List</a></li>
         @endif
     </ul>
 </li>
