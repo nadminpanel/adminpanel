@@ -10,7 +10,7 @@ Route::group(['middleware' => ['web'], 'namespace' => '\NAdminPanel\AdminPanel\C
 
     Route::group(['middleware' => ['auth', 'admin'], 'prefix' => config('nadminpanel.admin_backend_prefix')], function () {
 
-        Route::get(config('nadminpanel.admin_landing_link'), 'UserController@dashboard')->name('admin.dashboard');
+        Route::get(config('nadminpanel.admin_landing_link'), 'UserController@dashboard')->name('backend.dashboard');
 
         Route::post('admin.logout', 'LoginController@logout')->name('admin.logout');
 
@@ -18,17 +18,13 @@ Route::group(['middleware' => ['web'], 'namespace' => '\NAdminPanel\AdminPanel\C
         Route::delete('admin/archive/{archive}', 'UserController@destroyArchive')->name('admin.archive.delete');
         Route::match(['put', 'patch'], 'admin/archive/{archive}', 'UserController@unarchive')->name('admin.archive.unarchive');
 
-        Route::get('user/archive', 'UserController@indexArchive')->name('user.archive');
-        Route::delete('user/archive/{archive}', 'UserController@destroyArchive')->name('user.archive.delete');
-        Route::match(['put', 'patch'], 'user/archive/{archive}', 'UserController@unarchive')->name('user.archive.unarchive');
+        $modules = ['user', 'role', 'permission'];
 
-        Route::get('role/archive', 'RoleController@indexArchive')->name('role.archive');
-        Route::delete('role/archive/{archive}', 'RoleController@destroyArchive')->name('role.archive.delete');
-        Route::match(['put', 'patch'], 'role/archive/{archive}', 'RoleController@unarchive')->name('role.archive.unarchive');
-
-        Route::get('permission/archive', 'PermissionController@indexArchive')->name('permission.archive');
-        Route::delete('permission/archive/{archive}', 'PermissionController@destroyArchive')->name('permission.archive.delete');
-        Route::match(['put', 'patch'], 'permission/archive/{archive}', 'PermissionController@unarchive')->name('permission.archive.unarchive');
+        foreach ($modules as $module) {
+            Route::get($module.'/archive', ucfirst($module).'Controller@indexArchive')->name($module.'.archive');
+            Route::delete($module.'/archive/{archive}', ucfirst($module).'Controller@destroyArchive')->name($module.'.archive.delete');
+            Route::match(['put', 'patch'], $module.'/archive/{archive}', ucfirst($module).'Controller@unarchive')->name($module.'.archive.unarchive');
+        }
 
         Route::match(['put', 'patch'], 'role/{id}/permission', 'PermissionController@permissionUpdate')->name('role.permission.update');
         Route::get('admin', 'UserController@index')->name('admin.index');

@@ -42,7 +42,7 @@
                 <div class="form-group">
                     <label for="name" class="col-md-3 control-label">Name<span class="text-red">&nbsp;*</span></label>
                     <div class="col-md-6">
-                        <input type="text" name="name" id="name" value="{{ (old('name') != null) ? old('name') : (isset($user->name) ? $user->name : '') }}" class="form-control" autocomplete="off"/>
+                        <input type="text" name="name" id="name" value="{{ old('name', $user->name ?? '') }}" class="form-control" autocomplete="off"/>
                         @if($errors->has('name'))
                             <span class="text-red">{{ $errors->first('name') }}</span>
                         @endif
@@ -51,7 +51,7 @@
                 <div class="form-group">
                     <label for="email" class="col-md-3 control-label">Email<span class="text-red">&nbsp;*</span></label>
                     <div class="col-md-6">
-                        <input type="email" name="email" id="email" value="{{ (old('email') != null) ? old('email') : (isset($user->email) ? $user->email : '') }}" class="form-control" autocomplete="off"/>
+                        <input type="email" name="email" id="email" value="{{ old('email', $user->email ?? '') }}" class="form-control" autocomplete="off"/>
                         @if($errors->has('email'))
                             <span class="text-red">{{ $errors->first('email') }}</span>
                         @endif

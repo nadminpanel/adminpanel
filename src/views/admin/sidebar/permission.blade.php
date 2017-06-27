@@ -1,5 +1,5 @@
 @if(NAdminPanel\AdminPanel\Models\PermissionLabel::exists('permission') && (\Auth::user()->hasPermissionTo('show permission') || \Auth::user()->hasPermissionTo('create permission') || \Auth::user()->hasRole('developer')))
-<li class="{{ active_check(config('nadminpanel.admin_backend_prefix').'/permission', true) }} treeview">
+<li class="{{ active_route('permission.*') }} treeview">
     <a href="#">
         <i class="fa fa-shield"></i>
         <span>Permissions</span>

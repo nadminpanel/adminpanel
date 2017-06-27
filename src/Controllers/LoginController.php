@@ -36,7 +36,7 @@ class LoginController extends Controller
         $this->clearLoginAttempts($request);
 
         if(Auth::check() && Auth::user()->hasAnyRole(['admin', 'developer'])) {
-            $this->redirectTo = route('admin.dashboard');
+            $this->redirectTo = route('backend.dashboard');
         } else {
             $this->redirectTo = config('nadminpanel.user_landing_link');
         }

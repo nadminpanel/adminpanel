@@ -10,9 +10,10 @@
     }
   ],
   "require": {
+    "php": ">=7.0.0",
     "spatie/laravel-permission": "^1.8",
     "yajra/laravel-datatables-oracle": "^7.0",
-    "pyaesone17/active-state": "^1.1.1",
+    "pyaesone17/active-state": "^1.1.2",
     "tintnaingwin/email-checker": "^0.3.0",
     "intervention/image": "^2.3"
   },

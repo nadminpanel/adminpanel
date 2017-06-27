@@ -1,5 +1,5 @@
 @if(\Auth::user()->hasPermissionTo('show admin') || \Auth::user()->hasRole('developer'))
-<li class="{{ active_check(config('nadminpanel.admin_backend_prefix').'/admin', true) }} treeview">
+<li class="{{ active_route('admin.*') }} treeview">
     <a href="#">
         <i class="fa fa-user-secret"></i>
         <span>Admins</span>

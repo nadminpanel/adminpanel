@@ -28,7 +28,7 @@ class UserController extends Controller
     {
         if(Auth::check()) {
             if(Auth::user()->hasAnyRole(['admin', 'developer'])) {
-                return redirect()->route('admin.dashboard');
+                return redirect()->route('backend.dashboard');
             } else {
                 return redirect()->to(config('nadminpanel.user_landing_link'));
             }
