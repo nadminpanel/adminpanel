@@ -28,13 +28,7 @@ class PermissionController extends Controller
 
         if($request->ajax()){
             $query = PermissionLabel::all();
-            return Datatables::of($query)
-                ->addColumn('action', function ($permission) {
-                    return view($this->viewDir.'admin.datatable.permission', compact('permission'))->render();
-                })
-                ->addIndexColumn()
-                ->rawColumns(['action'])
-                ->make(true);
+            return $this->datatable($query);
         }
         return view($this->viewDir.'permission.indexOrArchive');
     }
@@ -90,13 +84,7 @@ class PermissionController extends Controller
 
         if ($request->ajax()) {
             $query = PermissionLabel::onlyTrashed()->get();
-            return Datatables::of($query)
-                ->addColumn('action', function ($permission) {
-                    return view($this->viewDir . 'admin.datatable.permission', compact('permission'))->render();
-                })
-                ->addIndexColumn()
-                ->rawColumns(['action'])
-                ->make(true);
+            return $this->datatable($query);
         }
         return view($this->viewDir . 'permission.indexOrArchive');
     }
@@ -120,5 +108,16 @@ class PermissionController extends Controller
             return response()->json(['status' => 'deleted']);
         }
 
+    }
+
+    private function datatable($query)
+    {
+        return Datatables::of($query)
+            ->addColumn('action', function ($permission) {
+                return view($this->viewDir . 'admin.datatable.permission', compact('permission'))->render();
+            })
+            ->addIndexColumn()
+            ->rawColumns(['action'])
+            ->make(true);
     }
 }

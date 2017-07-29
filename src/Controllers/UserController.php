@@ -49,13 +49,7 @@ class UserController extends Controller
                     $q->where('name', 'admin');
                 })->get();
             }
-            return Datatables::of($query)
-                ->addColumn('action', function ($user) use ($role) {
-                    return view($this->viewDir.'admin.datatable.'.$role, compact('user'))->render();
-                })
-                ->addIndexColumn()
-                ->rawColumns(['action'])
-                ->make(true);
+            return $this->datatable($query);
         }
         return view($this->viewDir.'admin.indexOrArchive', compact('role'));
     }
@@ -133,13 +127,7 @@ class UserController extends Controller
                     $q->where('name', 'admin');
                 })->get();
             }
-            return Datatables::of($query)
-                ->addColumn('action', function ($user) use ($role) {
-                    return view($this->viewDir.'admin.datatable.'.$role, compact('user'))->render();
-                })
-                ->addIndexColumn()
-                ->rawColumns(['action'])
-                ->make(true);
+            return $this->datatable($query);
         }
         return view($this->viewDir.'admin.indexOrArchive', compact('role'));
     }
@@ -169,4 +157,14 @@ class UserController extends Controller
         return view($this->viewDir.'admin.common.dashboard');
     }
 
+    private function datatable($query)
+    {
+        return Datatables::of($query)
+            ->addColumn('action', function ($user) use ($role) {
+                return view($this->viewDir.'admin.datatable.'.$role, compact('user'))->render();
+            })
+            ->addIndexColumn()
+            ->rawColumns(['action'])
+            ->make(true);
+    }
 }

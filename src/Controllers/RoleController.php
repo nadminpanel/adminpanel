@@ -29,26 +29,7 @@ class RoleController extends Controller
 
         if ($request->ajax()) {
             $query = Role::all();
-            return Datatables::of($query)
-                ->addColumn('permissions', function ($role) {
-                    $permissions = $role->permissions()->get();
-                    $permissions_str = '';
-                    foreach ($permissions as $key => $permission) {
-                        if ($key != count($permissions) - 1) {
-                            $permissions_str .= $permission->name . ', ';
-                        } else {
-                            $permissions_str .= $permission->name;
-                        }
-                    }
-                    if ($permissions_str == '') $permissions_str = 'No Permission';
-                    return '<a href="#" data-toggle="popover" data-content="' . $permissions_str . '"><button class="btn btn-xs btn-success">Permissions</button></a>';
-                })
-                ->addColumn('action', function ($role) {
-                    return view($this->viewDir . 'admin.datatable.role', compact('role'))->render();
-                })
-                ->addIndexColumn()
-                ->rawColumns(['permissions', 'action'])
-                ->make(true);
+            return $this->datatable($query);
         }
         return view($this->viewDir . 'role.indexOrArchive');
     }
@@ -128,26 +109,7 @@ class RoleController extends Controller
 
         if($request->ajax()){
             $query = Role::onlyTrashed()->get();
-            return Datatables::of($query)
-                ->addColumn('permissions', function ($role) {
-                    $permissions = $role->permissions()->get();
-                    $permissions_str = '';
-                    foreach ($permissions as $key => $permission) {
-                        if($key != count($permissions)-1) {
-                            $permissions_str .= $permission->name.', ';
-                        } else {
-                            $permissions_str .= $permission->name;
-                        }
-                    }
-                    if($permissions_str == '') $permissions_str = 'No Permission';
-                    return '<a href="#" data-toggle="popover" data-content="'.$permissions_str.'"><button class="btn btn-xs btn-success">Permissions</button></a>';
-                })
-                ->addColumn('action', function ($role) {
-                    return view($this->viewDir.'admin.datatable.role', compact('role'))->render();
-                })
-                ->addIndexColumn()
-                ->rawColumns(['permissions', 'action'])
-                ->make(true);
+            return $this->datatable($query);
         }
         return view($this->viewDir.'role.indexOrArchive');
     }
@@ -170,5 +132,29 @@ class RoleController extends Controller
         if ($request->ajax()) {
             return response()->json(['status'=>'deleted']);
         }
+    }
+
+    private function datatable($query)
+    {
+        return Datatables::of($query)
+            ->addColumn('permissions', function ($role) {
+                $permissions = $role->permissions()->get();
+                $permissions_str = '';
+                foreach ($permissions as $key => $permission) {
+                    if($key != count($permissions)-1) {
+                        $permissions_str .= $permission->name.', ';
+                    } else {
+                        $permissions_str .= $permission->name;
+                    }
+                }
+                if($permissions_str == '') $permissions_str = 'No Permission';
+                return '<a href="#" data-toggle="popover" data-content="'.$permissions_str.'"><button class="btn btn-xs btn-success">Permissions</button></a>';
+            })
+            ->addColumn('action', function ($role) {
+                return view($this->viewDir.'admin.datatable.role', compact('role'))->render();
+            })
+            ->addIndexColumn()
+            ->rawColumns(['permissions', 'action'])
+            ->make(true);
     }
 }
