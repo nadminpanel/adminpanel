@@ -49,7 +49,7 @@ class UserController extends Controller
                     $q->where('name', 'admin');
                 })->get();
             }
-            return $this->datatable($query);
+            return $this->datatable($query, $role);
         }
         return view($this->viewDir.'admin.indexOrArchive', compact('role'));
     }
@@ -157,7 +157,7 @@ class UserController extends Controller
         return view($this->viewDir.'admin.common.dashboard');
     }
 
-    private function datatable($query)
+    private function datatable($query, $role)
     {
         return Datatables::of($query)
             ->addColumn('action', function ($user) use ($role) {
