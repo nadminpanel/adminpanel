@@ -127,7 +127,7 @@ class UserController extends Controller
                     $q->where('name', 'admin');
                 })->get();
             }
-            return $this->datatable($query);
+            return $this->datatable($query, $role);
         }
         return view($this->viewDir.'admin.indexOrArchive', compact('role'));
     }
