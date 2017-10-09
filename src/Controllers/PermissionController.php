@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use NAdminPanel\AdminPanel\Models\PermissionLabel;
 use NAdminPanel\AdminPanel\Repositories\AdminPanelRepository;
 use NAdminPanel\AdminPanel\Requests\PermissionRequest;
-use Yajra\Datatables\Facades\Datatables;
+use Yajra\DataTables\Facades\Datatables;
 
 class PermissionController extends Controller
 {

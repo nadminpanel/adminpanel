@@ -8,7 +8,7 @@ use NAdminPanel\AdminPanel\Models\PermissionLabel;
 use NAdminPanel\AdminPanel\Models\Role;
 use NAdminPanel\AdminPanel\Repositories\AdminPanelRepository;
 use NAdminPanel\AdminPanel\Requests\RoleRequest;
-use Yajra\Datatables\Facades\Datatables;
+use Yajra\DataTables\Facades\Datatables;
 
 class RoleController extends Controller
 {

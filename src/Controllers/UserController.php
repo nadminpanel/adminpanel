@@ -9,7 +9,7 @@ use NAdminPanel\AdminPanel\Models\Role;
 use NAdminPanel\AdminPanel\Models\User;
 use NAdminPanel\AdminPanel\Repositories\AdminPanelRepository;
 use NAdminPanel\AdminPanel\Requests\AdminRequest;
-use Yajra\Datatables\Facades\Datatables;
+use Yajra\DataTables\Facades\Datatables;
 
 class UserController extends Controller
 {

@@ -87,7 +87,7 @@ class AdminPanelServiceProvider extends ServiceProvider
         $aliases = [
             'Active' => 'Pyaesone17\ActiveState\ActiveFacade',
             'EmailChecker' => 'Tintnaingwin\EmailChecker\Facades\EmailChecker',
-            'Datatables' => 'Yajra\Datatables\Facades\Datatables',
+            'Datatables' => 'Yajra\DataTables\Facades\DataTables',
             'Image' => 'Intervention\Image\Facades\Image'
         ];
 
