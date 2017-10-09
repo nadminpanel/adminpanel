@@ -15,7 +15,7 @@ N Admin Panel's central package, which includes:
 1) Run in your terminal:
 
 ``` bash
-$ composer require nadminpanel/adminpanel
+$ composer require nadminpanel/adminpanel --dev
 ```
 
 2) Add the service providers in config/app.php:
