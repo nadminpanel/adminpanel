@@ -6,7 +6,8 @@
   "authors": [
     {
       "name": "Pyae Hein",
-      "email": "nnieheayp@yahoo.com"
+      "email": "nnieheayp@yahoo.com",
+      "role": "Developer"
     }
   ],
   "require": {
@@ -20,6 +21,13 @@
   "autoload": {
     "psr-4": {
       "NAdminPanel\\AdminPanel\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "NAdminPanel\\AdminPanel\\AdminPanelServiceProvider"
+      ]
     }
   },
   "license": "MIT"
